@@ -27,10 +27,12 @@ namespace AzureCosmosDB.Modules
             QueryRequestOptions options = new QueryRequestOptions()
             {
                 PopulateIndexMetrics = true,
+                MaxItemCount         = 25, 
             };
 
             using (FeedIterator<Volcano> feedIterator = container.GetItemQueryIterator<Volcano>(queryDefinition, null, options))
             {
+                double totalRUs = 0;
                 while (feedIterator.HasMoreResults)
                 {
                     FeedResponse<Volcano> response = await feedIterator.ReadNextAsync();
@@ -41,7 +43,10 @@ namespace AzureCosmosDB.Modules
                     }
 
                     Console.WriteLine(response.IndexMetrics);
-                }                
+                    totalRUs += response.RequestCharge;
+                }
+
+                Console.WriteLine($"Total RUs: {totalRUs}");
             }
         }
     }

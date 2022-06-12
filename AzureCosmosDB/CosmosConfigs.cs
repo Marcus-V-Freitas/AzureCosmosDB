@@ -19,6 +19,7 @@ namespace AzureCosmosDB
 
         public string AccountEndpoint { get; set; }
         public string AuthKeyOrResourceToken { get; set; }
+        public string GatewayConnection { get; set; }
         public string Database { get; set; }
         public string Container { get; set; }
         public string ContainerLease { get; set; }
